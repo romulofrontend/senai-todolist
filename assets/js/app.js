@@ -4,22 +4,24 @@ function getItem(item){
 
 
 function addToDo(todoText){
-  const div = document.createElement("div");
+  if(todoText != ""){
+    const div = document.createElement("div");
     div.classList.add("form-check");
 
     const input = document.createElement("input");
     input.type = "checkbox";
     input.classList.add("form-check-input");
+    input.onclick = function(){
+      return checkToDo(this);
+    }      
 
     const label = document.createElement("label");
     label.classList.add("form-check-label");
 
-    const textItem = document.createTextNode(todoText);
-    
+    const textItem = document.createTextNode(todoText);    
     label.appendChild(textItem);
     div.appendChild(input);
     div.appendChild(label);
-
 
     const listItem = document.createElement("li");
     listItem.appendChild(div);
@@ -27,10 +29,10 @@ function addToDo(todoText){
 
     const todoList = getItem("#todo-list");
     todoList.appendChild(listItem);
+  }  
 }
 
 const inputToDo = getItem("#input-todo");
-
 inputToDo.addEventListener("keydown", (evento) => {
   if(evento.code == "Enter"){
     console.log("Enter pressionado");
@@ -52,5 +54,16 @@ btnAddToDo.addEventListener("click", (evento) => {
     addToDo(inputValue);    
     inputToDo = "";
   }
-
 });
+
+
+function checkToDo(checkbox){
+  const label = checkbox.nextElementSibling;
+  console.log(label);
+
+  if(checkbox.checked == true){
+    label.classList.add('todo-done');
+  }else{
+    label.classList.remove('todo-done');
+  }  
+}
